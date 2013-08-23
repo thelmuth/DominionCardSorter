@@ -1,7 +1,7 @@
 import sys
 
 if len(sys.argv) != 2:
-    print "Must pass card list text file to program."
+    print("Must pass card list text file to program.")
     exit(0)
 
 cardListText = sys.argv[1]
@@ -16,4 +16,4 @@ for line in f:
         line = line[:-1]
     cards.append(line)
 
-print cards
+print(cards)

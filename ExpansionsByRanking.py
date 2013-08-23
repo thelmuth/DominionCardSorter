@@ -3,13 +3,10 @@ import re
 import operator
 
 # This program takes as input a list of cards sorted from favorite to least
-# favorite (or best to worst). It then can output one of two things:
-#   1. A list of the expansions, sorted by the average position of cards
-#      from that expansion
-#   2. The rankings of cards from a specified expansion.
+# favorite (or best to worst). It then prints a list of the expansions, sorted by the average position of cards from that expansion.
 
 if len(sys.argv) != 2:
-    print "Takes 1 argument: list of cards ordered favorite to least favorite."
+    print("Takes 1 argument: list of cards ordered favorite to least favorite.")
     exit(0)
 
 cardListText = sys.argv[1]
@@ -37,7 +34,7 @@ expansionRankings = [expansionMap[card] for card in cards]
 countMap = {}
 rankSumMap = {}
 for r, exp in enumerate(expansionRankings):
-    if not countMap.has_key(exp):
+    if exp not in countMap:
         countMap[exp] = 0
         rankSumMap[exp] = 0
     countMap[exp] = countMap[exp] + 1
@@ -48,9 +45,9 @@ for exp in countMap.keys():
     avgRank = rankSumMap[exp] / float(countMap[exp])
     avgRankMap[exp] = avgRank
 
-sortedExps = sorted(avgRankMap.iteritems(), key=operator.itemgetter(1))
+sortedExps = sorted(avgRankMap.items(), key=operator.itemgetter(1))
 
-print "The expansions sorted by average rank of cards in that expansion:"
+print("The expansions sorted by average rank of cards in that expansion:")
 
 for (exp, rank) in sortedExps:
-    print  "%-11s %.1f" % (exp, rank)
+    print("%-11s %.1f" % (exp, rank))
