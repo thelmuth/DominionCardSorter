@@ -1,5 +1,12 @@
 import sys
 import re
+import operator
+
+# This program takes as input a list of cards sorted from favorite to least
+# favorite (or best to worst). It then can output one of two things:
+#   1. A list of the expansions, sorted by the average position of cards
+#      from that expansion
+#   2. The rankings of cards from a specified expansion.
 
 if len(sys.argv) != 2:
     print "Takes 1 argument: list of cards ordered favorite to least favorite."
@@ -17,7 +24,7 @@ for line in f:
         line = line[:-1]
     cards.append(line)
 
-f2 = open("AllCards.txt")
+f2 = open("CardLists/AllCards.txt")
 expansionMap = {}
 regexp = re.compile(r'(.*) \((.*)\)')
 for line in f2:
@@ -36,7 +43,14 @@ for r, exp in enumerate(expansionRankings):
     countMap[exp] = countMap[exp] + 1
     rankSumMap[exp] = rankSumMap[exp] + r + 1
 
+avgRankMap = {}
 for exp in countMap.keys():
     avgRank = rankSumMap[exp] / float(countMap[exp])
-    print "%-11s %.1f" % (exp, avgRank)
-        
+    avgRankMap[exp] = avgRank
+
+sortedExps = sorted(avgRankMap.iteritems(), key=operator.itemgetter(1))
+
+print "The expansions sorted by average rank of cards in that expansion:"
+
+for (exp, rank) in sortedExps:
+    print  "%-11s %.1f" % (exp, rank)
